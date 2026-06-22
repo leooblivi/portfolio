@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <radialGradient id="bgGrad" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#F5EDD8"/>
+      <stop offset="100%" stop-color="#E8D9BC"/>
+    </radialGradient>
+    <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C49A3C"/>
+      <stop offset="50%" stop-color="#B8843A"/>
+      <stop offset="100%" stop-color="#9A6E2A"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="96" fill="url(#bgGrad)"/>
+  
+  <!-- Gold border ring -->
+  <circle cx="100" cy="100" r="96" fill="none" stroke="url(#borderGrad)" stroke-width="2.5" opacity="0.8"/>
+  <circle cx="100" cy="100" r="90" fill="none" stroke="url(#borderGrad)" stroke-width="0.8" opacity="0.4"/>
+
+  <!-- LN letters - serif style matching website -->
+  <!-- L -->
+  <text x="28" y="128" 
+        font-family="Georgia, 'Times New Roman', serif" 
+        font-size="96" 
+        font-weight="400"
+        fill="#18130E"
+        letter-spacing="-2">L</text>
+  
+  <!-- N - italic like "Nguyen" on site -->
+  <text x="95" y="128" 
+        font-family="Georgia, 'Times New Roman', serif" 
+        font-size="96" 
+        font-weight="400"
+        font-style="italic"
+        fill="#18130E">N</text>
+
+  <!-- Subtle gold underline accent -->
+  <line x1="42" y1="142" x2="158" y2="142" stroke="url(#borderGrad)" stroke-width="1.5" opacity="0.6"/>
+</svg>
