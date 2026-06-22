@@ -1,1 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leonardo Nguyen — Growth Lead</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: #F7F3EB;
+    color: #18130E;
+    font-family: 'DM Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-wrap: pretty;
+  }
+
+  a { text-decoration: none; color: inherit; }
+
+  section[id] { scroll-margin-top: 72px; }
+
+  /* ── REVEAL ── */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.75s ease, transform 0.75s ease;
+  }
+  [data-reveal].vis { opacity: 1; transform: none; }
+  [data-reveal][data-delay="1"] { transition-delay: 0.12s; }
+  [data-reveal][data-delay="2"] { transition-delay: 0.24s; }
+  [data-reveal][data-delay="3"] { transition-delay: 0.38s; }
+
+  /* ── HERO ANIMATIONS ── */
+  @keyframes heroUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: none; }
+  }
+  @keyframes paintIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  .h-label   { animation: heroUp 0.9s cubic-bezier(.4,0,.2,1) 0.10s both; }
+  .h-name    { animation: heroUp 0.9s cubic-bezier(.4,0,.2,1) 0.30s both; }
+  .h-tagline { animation: heroUp 0.9s cubic-bezier(.4,0,.2,1) 0.52s both; }
+  .h-stats   { animation: heroUp 0.9s cubic-bezier(.4,0,.2,1) 0.72s both; }
+  .h-cta     { animation: heroUp 0.9s cubic-bezier(.4,0,.2,1) 0.90s both; }
+  .paint-bg  { animation: paintIn 2.2s ease 0.15s both; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: transparent;
+    border-bottom: 1px solid transparent;
+    transition: background 0.35s ease, border-color 0.35s ease, backdrop-filter 0.35s ease;
+  }
+  nav.scrolled {
+    background: rgba(247,243,235,0.96);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom-color: #DDD5C8;
+  }
+  .nav-inner {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 48px;
+    height: 62px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: #18130E;
+  }
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+  }
+  .nav-link {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11.5px;
+    font-weight: 400;
+    color: #7A6E62;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-link:hover { color: #18130E; }
+  .nav-cta {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11.5px;
+    font-weight: 500;
+    color: #F7F3EB;
+    background: #18130E;
+    padding: 10px 22px;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: #B8843A; }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-top: 62px;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center 20%;
+    opacity: 0.11;
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(108deg,rgba(247,243,235,0.97) 0%,rgba(247,243,235,0.95) 38%,rgba(247,243,235,0.78) 62%,rgba(240,234,216,0.52) 100%);
+  }
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 72px 48px;
+  }
+  .hero-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #B8843A;
+    margin-bottom: 22px;
+  }
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(72px, 9.5vw, 124px);
+    font-weight: 600;
+    line-height: 0.88;
+    color: #18130E;
+    margin-bottom: 38px;
+    letter-spacing: -0.025em;
+  }
+  .hero-name em {
+    font-style: italic;
+    font-weight: 300;
+    letter-spacing: -0.015em;
+  }
+  .hero-tagline {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: #4A3F35;
+    max-width: 520px;
+    margin-bottom: 56px;
+  }
+  .hero-stats {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin-bottom: 56px;
+  }
+  .stat { padding-right: 44px; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 56px;
+    font-weight: 600;
+    color: #18130E;
+    line-height: 1;
+    letter-spacing: -0.025em;
+  }
+  .stat-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #7A6E62;
+    margin-top: 8px;
+  }
+  .stat-divider {
+    width: 1px;
+    background: #DDD5C8;
+    margin-right: 44px;
+    align-self: stretch;
+  }
+  .hero-cta {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: #F7F3EB;
+    background: #18130E;
+    padding: 14px 30px;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    display: inline-block;
+    transition: background 0.2s;
+  }
+  .btn-primary:hover { background: #B8843A; }
+  .btn-ghost {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: #18130E;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    border-bottom: 1px solid #18130E;
+    padding-bottom: 2px;
+    display: inline-block;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .btn-ghost:hover { color: #B8843A; border-color: #B8843A; }
+  .hero-rule {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #DDD5C8 18%, #DDD5C8 82%, transparent);
+  }
+
+  /* ── SECTION HEADERS ── */
+  .section-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #B8843A;
+    margin-bottom: 14px;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(42px, 5.5vw, 68px);
+    font-weight: 500;
+    font-style: italic;
+    color: #18130E;
+    line-height: 1.02;
+  }
+  .section-wrap {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  /* ── EXPERIENCE ── */
+  .exp-section {
+    padding: 108px 0 88px;
+    background: #F7F3EB;
+  }
+  .exp-header { margin-bottom: 68px; }
+
+  .job {
+    border-top: 1px solid #DDD5C8;
+  }
+  .job:last-child { border-bottom: 1px solid #DDD5C8; }
+
+  .job-btn {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 30px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    cursor: pointer;
+    text-align: left;
+    outline: none;
+    transition: background 0.2s;
+  }
+  .job-btn:hover { background: rgba(200,191,176,0.07); }
+
+  .job-meta { flex: 1; padding-right: 24px; }
+  .job-title-row {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 7px;
+    flex-wrap: wrap;
+  }
+  .job-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 27px;
+    font-weight: 600;
+    color: #18130E;
+  }
+  .job-company {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: #B8843A;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+  }
+  .job-period {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11.5px;
+    font-weight: 300;
+    color: #7A6E62;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+  .job-chevron {
+    font-size: 24px;
+    color: #7A6E62;
+    display: block;
+    line-height: 1;
+    padding-top: 6px;
+    user-select: none;
+    pointer-events: none;
+    flex-shrink: 0;
+    transition: transform 0.32s ease, color 0.2s ease;
+  }
+  .job.open .job-chevron {
+    transform: rotate(90deg);
+    color: #B8843A;
+  }
+
+  .job-detail {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.48s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .job.open .job-detail { max-height: 720px; }
+
+  .job-body { padding: 0 0 40px; }
+  .job-desc {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.82;
+    color: #4A3F35;
+    margin-bottom: 28px;
+    max-width: 780px;
+  }
+  .job-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: #DDD5C8;
+    border: 1px solid #DDD5C8;
+  }
+  .job-card {
+    background: #F7F3EB;
+    padding: 22px 26px;
+  }
+  .job-card-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #B8843A;
+    margin-bottom: 11px;
+  }
+  .job-card-text {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: #4A3F35;
+    line-height: 1.7;
+  }
+
+  /* ── CAMPAIGNS ── */
+  .campaigns-section {
+    padding: 88px 0 108px;
+    background: linear-gradient(180deg, #EDE8D8 0%, #E8E0CC 100%);
+  }
+  .campaigns-header { margin-bottom: 68px; }
+
+  .campaign {
+    border-top: 1px solid #C8BFB0;
+    padding: 30px 0;
+    display: grid;
+    grid-template-columns: 56px 1fr 148px;
+    gap: 28px;
+    align-items: start;
+  }
+  .campaign:last-child { border-bottom: 1px solid #C8BFB0; }
+
+  .campaign-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: #B8843A;
+    font-style: italic;
+    padding-top: 5px;
+  }
+  .campaign-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: #18130E;
+    margin-bottom: 7px;
+  }
+  .campaign-desc {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: #7A6E62;
+    line-height: 1.7;
+    margin-bottom: 12px;
+  }
+  .campaign-tags {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10.5px;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: #B8843A;
+  }
+  .campaign-metric { text-align: right; }
+  .campaign-metric-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px;
+    font-weight: 600;
+    color: #18130E;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .campaign-metric-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: #7A6E62;
+    margin-top: 5px;
+  }
+
+  /* ── SKILLS ── */
+  .skills-section {
+    padding: 88px 0;
+    background: #F7F3EB;
+  }
+  .skills-header { margin-bottom: 52px; }
+  .skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .skill-tag {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: #4A3F35;
+    border: 1px solid #C8BFB0;
+    padding: 10px 20px;
+    letter-spacing: 0.02em;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .skill-tag:hover { border-color: #B8843A; color: #18130E; }
+
+  /* ── FOOTER ── */
+  .footer-section {
+    padding: 88px 0 64px;
+    background: #18130E;
+    position: relative;
+    overflow: hidden;
+  }
+  .footer-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center 30%;
+    opacity: 0.05;
+    mix-blend-mode: lighten;
+  }
+  .footer-inner {
+    position: relative;
+    z-index: 1;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 88px;
+    margin-bottom: 88px;
+  }
+  .footer-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #B8843A;
+    margin-bottom: 22px;
+  }
+  .footer-edu-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    font-weight: 500;
+    color: #F7F3EB;
+    line-height: 1.25;
+    margin-bottom: 12px;
+  }
+  .footer-edu-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: #7A6E62;
+    margin-bottom: 8px;
+  }
+  .footer-edu-award {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: #B8843A;
+  }
+  .contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .contact-email {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: #F7F3EB;
+    letter-spacing: 0.01em;
+    transition: color 0.2s;
+  }
+  .contact-email:hover { color: #B8843A; }
+  .contact-link {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: #7A6E62;
+    transition: color 0.2s;
+  }
+  .contact-link:hover { color: #B8843A; }
+  .contact-text {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: #7A6E62;
+  }
+  .footer-bar {
+    border-top: 1px solid #2A2018;
+    padding-top: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .footer-sig {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 400;
+    font-style: italic;
+    color: #4A3F35;
+  }
+  .footer-copy {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    color: #4A3F35;
+    letter-spacing: 0.11em;
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">Leonardo Nguyen</a>
+    <div class="nav-links">
+      <a href="#experience" class="nav-link">Experience</a>
+      <a href="#campaigns" class="nav-link">Campaigns</a>
+      <a href="#skills" class="nav-link">Skills</a>
+      <a href="/cdn-cgi/l/email-protection#aac6cfc5c5c8c6c3dcc3eacdc7cbc3c684c9c5c7" class="nav-cta">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-bg paint-bg" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Michelangelo_-_Creation_of_Adam_%28cropped%29.jpg/1280px-Michelangelo_-_Creation_of_Adam_%28cropped%29.jpg');"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-label h-label">Growth Lead · Web3 Ecosystem · Vietnam</p>
+    <h1 class="hero-name h-name">Leonardo<br><em>Nguyen</em></h1>
+    <p class="hero-tagline h-tagline">Growth &amp; UA operator with 5+ years driving user acquisition, partnership development, and market expansion across high-growth digital products in the Web3 ecosystem.</p>
+    <div class="hero-stats h-stats">
+      <div class="stat">
+        <p class="stat-num">5+</p>
+        <p class="stat-label">Years Experience</p>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <p class="stat-num">1M+</p>
+        <p class="stat-label">Users Reached</p>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat" style="padding-right:0;">
+        <p class="stat-num">$2B+</p>
+        <p class="stat-label">DEX Volume Driven</p>
+      </div>
+    </div>
+    <div class="hero-cta h-cta">
+      <a href="/cdn-cgi/l/email-protection#3b575e54545957524d527b5c565a525715585456" class="btn-primary">Get In Touch</a>
+      <a href="https://www.linkedin.com/in/0xleonardonguyen/" target="_blank" class="btn-ghost">LinkedIn ↗</a>
+    </div>
+  </div>
+  <div class="hero-rule"></div>
+</section>
+
+<!-- ══ EXPERIENCE ══ -->
+<section id="experience" class="exp-section">
+  <div class="section-wrap">
+    <div class="exp-header" data-reveal>
+      <p class="section-eyebrow">Professional Journey</p>
+      <h2 class="section-title">Experience</h2>
+    </div>
+
+    <!-- CMO Holdstation -->
+    <div class="job" data-reveal>
+      <button class="job-btn" onclick="toggleJob(this)">
+        <div class="job-meta">
+          <div class="job-title-row">
+            <span class="job-title">Chief Marketing Officer</span>
+            <span class="job-company">Holdstation</span>
+          </div>
+          <p class="job-period">Oct 2022 – Jan 2026 &nbsp;·&nbsp; Web3 Wallet &amp; DEX on zkSync</p>
+        </div>
+        <span class="job-chevron">›</span>
+      </button>
+      <div class="job-detail">
+        <div class="job-body">
+          <p class="job-desc">Led growth, UA, and partnership strategy for Vietnam's leading Web3 wallet and DEX on zkSync. Designed incentive-driven acquisition programs and expanded the platform's user base across multiple product lines — from wallets to launchpads and AI agent infrastructure.</p>
+          <div class="job-cards">
+            <div class="job-card">
+              <p class="job-card-label">Partnership &amp; Grants</p>
+              <p class="job-card-text">Secured $800K marketing grant from zkSync Foundation. Onboarded 1,200+ games and app projects through Holdstation's launchpad and AIgentFi infrastructure.</p>
+            </div>
+            <div class="job-card">
+              <p class="job-card-label">Community &amp; UA</p>
+              <p class="job-card-text">Grew X/Twitter from 0 to 212K followers. Scaled wallet to 300K+ downloads and 30K+ weekly active users. Drove $2B+ DEX volume and $8M+ protocol fees.</p>
+            </div>
+            <div class="job-card">
+              <p class="job-card-label">Data &amp; Operations</p>
+              <p class="job-card-text">Built n8n and AI-powered reporting for lifecycle tracking, campaign monitoring, referral programs, and incentive loop automation.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Marketing Manager MevX -->
+    <div class="job" data-reveal data-delay="1">
+      <button class="job-btn" onclick="toggleJob(this)">
+        <div class="job-meta">
+          <div class="job-title-row">
+            <span class="job-title">Marketing Manager</span>
+            <span class="job-company">MevX</span>
+          </div>
+          <p class="job-period">Jan 2026 – Apr 2026 &nbsp;·&nbsp; Decentralized Trading Terminal</p>
+        </div>
+        <span class="job-chevron">›</span>
+      </button>
+      <div class="job-detail">
+        <div class="job-body">
+          <p class="job-desc">Led UA and retention initiatives across trading product campaigns; analyzed funnel performance and user behavior to improve activation metrics. Conducted market research and competitor benchmarking to identify opportunities and UX gaps in the Vietnamese trading product landscape. Supported cross-functional GTM execution and delivered data-backed recommendations to improve overall product and campaign performance.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Head of Research TK Ventures -->
+    <div class="job" data-reveal data-delay="2">
+      <button class="job-btn" onclick="toggleJob(this)">
+        <div class="job-meta">
+          <div class="job-title-row">
+            <span class="job-title">Head of Research</span>
+            <span class="job-company">TK Ventures</span>
+          </div>
+          <p class="job-period">2021 – 2022 &nbsp;·&nbsp; Web3 Media Publisher, SE Asia</p>
+        </div>
+        <span class="job-chevron">›</span>
+      </button>
+      <div class="job-detail">
+        <div class="job-body">
+          <p class="job-desc">Scaled Near Protocol's Vietnamese community from 8K to 102K followers in 4 months through narrative-driven content and ecosystem partnership campaigns. Delivered market research and growth insights for 30+ early-stage crypto projects across DeFi, GameFi, and Move-to-Earn verticals. Advised project founders on go-to-market positioning, tokenomics design, and investor messaging.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Co-Founder 3F Minecraft -->
+    <div class="job" data-reveal data-delay="3">
+      <button class="job-btn" onclick="toggleJob(this)">
+        <div class="job-meta">
+          <div class="job-title-row">
+            <span class="job-title">Co-Founder</span>
+            <span class="job-company">3F Minecraft – Vietnam Gaming Community</span>
+          </div>
+          <p class="job-period">Jan 2015 – Aug 2020 &nbsp;·&nbsp; Vietnam's Largest Minecraft Server</p>
+        </div>
+        <span class="job-chevron">›</span>
+      </button>
+      <div class="job-detail">
+        <div class="job-body">
+          <p class="job-desc">Founded and scaled Vietnam's largest Minecraft community server from scratch to a self-sustaining gaming platform with real monetization. Grew to 500–700 daily active players, peaking at 1,200 DAU in 2018. Generated 30 million VND/day in peak revenue through in-game purchases. Built and executed YouTube, Facebook Ads, and affiliate campaigns — establishing foundational expertise in gaming-specific user acquisition that carried forward into Web3.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ CAMPAIGNS ══ -->
+<section id="campaigns" class="campaigns-section">
+  <div class="section-wrap">
+    <div class="campaigns-header" data-reveal>
+      <p class="section-eyebrow">Holdstation · 2022 – 2025</p>
+      <h2 class="section-title">Successful Campaigns</h2>
+    </div>
+
+    <div class="campaign" data-reveal>
+      <span class="campaign-num">I</span>
+      <div>
+        <p class="campaign-title">EggVault — Worldchain</p>
+        <p class="campaign-desc">Designed and executed a rewarded UA program with milestone-based reward structures on Worldchain. Full incentive architecture, smart contract reward coordination, and user journey optimization.</p>
+        <p class="campaign-tags">Rewarded UA · Incentive Design · On-chain Acquisition</p>
+      </div>
+      <div class="campaign-metric">
+        <p class="campaign-metric-num">500K</p>
+        <p class="campaign-metric-label">Users Acquired</p>
+      </div>
+    </div>
+
+    <div class="campaign" data-reveal data-delay="1">
+      <span class="campaign-num">II</span>
+      <div>
+        <p class="campaign-title">AION — Worldchain</p>
+        <p class="campaign-desc">Cross-platform acquisition campaign with in-app incentives and partner distribution channels. Coordinated ecosystem-wide activation and user onboarding across Worldchain's dapp suite.</p>
+        <p class="campaign-tags">Cross-Platform UA · Partner Channels · Ecosystem Activation</p>
+      </div>
+      <div class="campaign-metric">
+        <p class="campaign-metric-num">620K</p>
+        <p class="campaign-metric-label">Users Acquired</p>
+      </div>
+    </div>
+
+    <div class="campaign" data-reveal data-delay="2">
+      <span class="campaign-num">III</span>
+      <div>
+        <p class="campaign-title">WorldPot — Worldchain</p>
+        <p class="campaign-desc">Gamified incentive-driven acquisition campaign targeting the Worldchain DeFi ecosystem. Managed from incentive architecture design through execution, analytics and iteration.</p>
+        <p class="campaign-tags">Gamification · DeFi Acquisition · Performance Analysis</p>
+      </div>
+      <div class="campaign-metric">
+        <p class="campaign-metric-num">80K</p>
+        <p class="campaign-metric-label">Users Acquired</p>
+      </div>
+    </div>
+
+    <div class="campaign" data-reveal>
+      <span class="campaign-num">IV</span>
+      <div>
+        <p class="campaign-title">$HOLD Token IDO</p>
+        <p class="campaign-desc">Orchestrated coordinated GTM execution across all owned channels, managed ecosystem partner communications, and drove community activation before and during the IDO. Final FDV at $60M ATH.</p>
+        <p class="campaign-tags">GTM Execution · Ecosystem Partnerships · Community Activation</p>
+      </div>
+      <div class="campaign-metric">
+        <p class="campaign-metric-num">$3M</p>
+        <p class="campaign-metric-label">Raised in ETH</p>
+      </div>
+    </div>
+
+    <div class="campaign" data-reveal data-delay="1">
+      <span class="campaign-num">V</span>
+      <div>
+        <p class="campaign-title">zkSync Foundation Grant</p>
+        <p class="campaign-desc">Developed grant proposal with performance metrics alignment. Managed sustained relationship with the zkSync Foundation ecosystem team, then deployed the budget across growth and partnership channels.</p>
+        <p class="campaign-tags">Grant Acquisition · Relationship Management · Budget Deployment</p>
+      </div>
+      <div class="campaign-metric">
+        <p class="campaign-metric-num">$800K</p>
+        <p class="campaign-metric-label">Grant Secured</p>
+      </div>
+    </div>
+
+    <div class="campaign" data-reveal data-delay="2">
+      <span class="campaign-num">VI</span>
+      <div>
+        <p class="campaign-title">Community &amp; Social Growth</p>
+        <p class="campaign-desc">Built Holdstation's X/Twitter presence from zero through KOL partnerships, Twitter Spaces, community events, and consistent content cadence. Scaled wallet app to 300K+ downloads and 30K+ weekly active users.</p>
+        <p class="campaign-tags">Social Strategy · KOL Network · Community Events</p>
+      </div>
+      <div class="campaign-metric">
+        <p class="campaign-metric-num">212K</p>
+        <p class="campaign-metric-label">X Followers</p>
+      </div>
+    </div>
+
+    <div class="campaign" data-reveal data-delay="3">
+      <span class="campaign-num">VII</span>
+      <div>
+        <p class="campaign-title">DEX Volume &amp; Protocol Fees</p>
+        <p class="campaign-desc">Continuous funnel analysis, activation optimization, and user journey improvements drove $2B+ cumulative DEX trading volume. Built n8n automation pipelines for lifecycle tracking, referral programs, and incentive loops.</p>
+        <p class="campaign-tags">Funnel Optimization · n8n Automation · Lifecycle Analytics</p>
+      </div>
+      <div class="campaign-metric">
+        <p class="campaign-metric-num">$2B+</p>
+        <p class="campaign-metric-label">Volume · $8M+ Fees</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ SKILLS ══ -->
+<section id="skills" class="skills-section">
+  <div class="section-wrap">
+    <div class="skills-header" data-reveal>
+      <p class="section-eyebrow">Competencies</p>
+      <h2 class="section-title">Skills</h2>
+    </div>
+    <div class="skills-list" data-reveal data-delay="1">
+      <span class="skill-tag">Partnership &amp; Market Expansion</span>
+      <span class="skill-tag">User Acquisition Strategy</span>
+      <span class="skill-tag">Rewarded UA &amp; Incentive Design</span>
+      <span class="skill-tag">Community Growth</span>
+      <span class="skill-tag">GTM Strategy &amp; Execution</span>
+      <span class="skill-tag">Web3 · DeFi · GameFi</span>
+      <span class="skill-tag">Data &amp; Operations (n8n, AI)</span>
+      <span class="skill-tag">Content &amp; Social Strategy</span>
+      <span class="skill-tag">Tokenomics Advisory</span>
+      <span class="skill-tag">Ecosystem Partnership Management</span>
+      <span class="skill-tag">Funnel Analysis &amp; Optimization</span>
+      <span class="skill-tag">Campaign Performance Monitoring</span>
+      <span class="skill-tag">KOL &amp; Influencer Management</span>
+      <span class="skill-tag">Vietnamese &amp; English · Fluent</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<section class="footer-section">
+  <div class="footer-bg" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Sistine_Chapel_ceiling_photo_2.jpg/1280px-Sistine_Chapel_ceiling_photo_2.jpg');"></div>
+  <div class="section-wrap footer-inner">
+    <div class="footer-grid" data-reveal>
+      <div>
+        <p class="footer-eyebrow">Education</p>
+        <h3 class="footer-edu-title">Bachelor's, Accounting &amp; Finance</h3>
+        <p class="footer-edu-sub">FPT University · 2018 – 2021</p>
+        <p class="footer-edu-award">GPA 3.8 / 4.0 · Best Thesis Awardee</p>
+      </div>
+      <div>
+        <p class="footer-eyebrow">Contact</p>
+        <div class="contact-list">
+          <a href="/cdn-cgi/l/email-protection#aec2cbc1c1ccc2c7d8c7eec9c3cfc7c280cdc1c3" class="contact-email"><span class="__cf_email__" data-cfemail="e78b828888858b8e918ea7808a868e8bc984888a">[email&#160;protected]</span></a>
+          <a href="tel:+84394776371" class="contact-link">+84 39 477 6371</a>
+          <a href="https://www.linkedin.com/in/0xleonardonguyen/" target="_blank" class="contact-link">linkedin.com/in/0xleonardonguyen ↗</a>
+          <p class="contact-text">Ho Chi Minh City, Vietnam</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bar">
+      <span class="footer-sig">Leonardo Nguyen</span>
+      <span class="footer-copy">Growth Lead · Ho Chi Minh City · 2026</span>
+    </div>
+  </div>
+</section>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // ── NAV scroll ──
+  var nav = document.getElementById('nav');
+  window.addEventListener('scroll', function () {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // ── Accordion ──
+  function toggleJob(btn) {
+    var job = btn.closest('.job');
+    var isOpen = job.classList.contains('open');
+    // close all
+    document.querySelectorAll('.job.open').forEach(function (j) { j.classList.remove('open'); });
+    // open clicked if it was closed
+    if (!isOpen) job.classList.add('open');
+  }
+
+  // ── Scroll reveal ──
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('vis');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -28px 0px' });
+
+  setTimeout(function () {
+    document.querySelectorAll('[data-reveal]').forEach(function (el) {
+      observer.observe(el);
+    });
+  }, 100);
+</script>
+</body>
+</html>
